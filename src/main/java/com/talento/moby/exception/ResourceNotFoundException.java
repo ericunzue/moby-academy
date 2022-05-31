@@ -1,16 +1,16 @@
 package com.talento.moby.exception;
 
-public class ApiRequestException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException {
 
-    public ApiRequestException() {
+    public ResourceNotFoundException() {
     }
 
-    public ApiRequestException(String message) {
+    public ResourceNotFoundException(String message) {
 
         super(message);
     }
 
-    public ApiRequestException(String message, Throwable cause) {
+    public ResourceNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

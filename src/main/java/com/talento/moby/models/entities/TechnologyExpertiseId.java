@@ -4,30 +4,30 @@ import java.io.Serializable;
 
 public class TechnologyExpertiseId implements Serializable {
 
-    private int technology;
-    private int candidate;
+    private Long technology;
+    private Long candidate;
 
     public TechnologyExpertiseId() {
     }
 
-    public TechnologyExpertiseId(int technology, int candidate) {
+    public TechnologyExpertiseId(Long technology, Long candidate) {
         this.technology = technology;
         this.candidate = candidate;
     }
 
-    public int getTechnology() {
+    public Long getTechnology() {
         return technology;
     }
 
-    public void setTechnology(int technology) {
+    public void setTechnology(Long technology) {
         this.technology = technology;
     }
 
-    public int getCandidate() {
+    public Long getCandidate() {
         return candidate;
     }
 
-    public void setCandidate(int candidate) {
+    public void setCandidate(Long candidate) {
         this.candidate = candidate;
     }
 }

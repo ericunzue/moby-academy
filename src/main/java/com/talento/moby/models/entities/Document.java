@@ -1,5 +1,6 @@
 package com.talento.moby.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.talento.moby.models.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-@Entity(name = "dni")
+@Entity
+@Table(name = "dni")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,19 +27,21 @@ public class Document {
 
     @Id
     @Column(name = "dniId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
 
     @Column(name = "dniNumber", unique = true, nullable = false)
-    @NotEmpty(message = "number cannot be empty")
-    private Integer number;
+    @NotNull()
+    @Min(value = 8, message = "number must be at least 8 digits long")
+    private int number;
 
-    @OneToOne(mappedBy = "dni")
+    @JsonIgnore()
+    @OneToOne()
     private Candidate candidate;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     @Column(name = "dniType", nullable = false)
-    @NotEmpty(message = "type cannot be empty")
     private Type type;
 }

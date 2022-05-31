@@ -1,8 +1,13 @@
-package com.talento.moby.models.dto;
+package com.talento.moby.mappers;
 
+import com.talento.moby.models.dto.CandidateDto;
 import com.talento.moby.models.entities.Candidate;
 
 public class CandidateMapper {
+
+    private CandidateMapper() {
+
+    }
 
     public static CandidateDto candidateToDto(Candidate candidate) {
         return CandidateDto.builder()

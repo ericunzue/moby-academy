@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "technologiesExpertise")
 @IdClass(value = TechnologyExpertiseId.class)
 @Data
 @NoArgsConstructor

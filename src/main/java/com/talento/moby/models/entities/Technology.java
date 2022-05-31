@@ -9,21 +9,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.Table;
 
-@Entity(name = "technologies")
+@Entity
+@Table(name = "technologies")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Technology {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "technologyId")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
-    @NotEmpty(message = "Name may not be blank")
+
     private String name;
 
     @Column(name = "version")
