@@ -51,7 +51,7 @@ public class CandidateServiceImpl implements CandidateService {
         candidate.setDni(candidateInformation.getDni());
         candidate.setTechnologies(candidateInformation.getTechnologies());
 
-        return candidateRepository.save(candidae);
+        return candidateRepository.save(candidate);
     }
 
     @Override

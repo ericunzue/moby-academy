@@ -15,4 +15,12 @@ public class TechnologyMapper {
                 .version(technology.getVersion())
                 .build();
     }
+
+    public static Technology technologyDtoToTechnology(TechnologyDto dto) {
+        return Technology.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .version(dto.getVersion())
+                .build();
+    }
 }
