@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Entity
 @Table(name = "candidates")
 @Data
@@ -32,7 +33,6 @@ public class Candidate {
     private Long id;
 
     @Column(name = "name", nullable = false)
-
     private String name;
 
     @Column(name = "surname", nullable = false)
@@ -52,5 +52,7 @@ public class Candidate {
     @Column(name = "technologyId")
     List<Technology> technologies;
 
-
+    public void addTechnology(Technology technology) {
+        this.technologies.add(technology);
+    }
 }

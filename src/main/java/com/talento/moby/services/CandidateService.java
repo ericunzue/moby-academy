@@ -16,5 +16,5 @@ public interface CandidateService {
 
     List<Candidate> getAll();
 
-
+    Candidate addTechnology(Long candidateId, Long technologyId);
 }

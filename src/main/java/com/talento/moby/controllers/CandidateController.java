@@ -19,15 +19,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/candidate")
+@RequestMapping(value = "/api/candidates")
 public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
 
     @GetMapping
-    public List<Candidate> getAll() {
-        return candidateService.getAll();
+    public ResponseEntity<List<Candidate>> getAll() {
+
+        return new ResponseEntity<>(candidateService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -48,5 +49,10 @@ public class CandidateController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Candidate> delete(@PathVariable("id") Long id) {
         return new ResponseEntity<>(candidateService.delete(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/technology/add/{candidateId}/{technologyId}")
+    public ResponseEntity<Candidate> addTechnology(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId) {
+        return new ResponseEntity<>(candidateService.addTechnology(candidateId, technologyId), HttpStatus.OK);
     }
 }

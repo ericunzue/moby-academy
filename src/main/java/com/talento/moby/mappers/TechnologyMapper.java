@@ -16,6 +16,13 @@ public class TechnologyMapper {
                 .build();
     }
 
+    public static Technology technologyDtoToTechnologyWithoutId(TechnologyDto technology) {
+        return Technology.builder()
+                .name(technology.getName())
+                .version(technology.getVersion())
+                .build();
+    }
+
     public static Technology technologyDtoToTechnology(TechnologyDto dto) {
         return Technology.builder()
                 .id(dto.getId())

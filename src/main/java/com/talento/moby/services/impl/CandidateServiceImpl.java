@@ -5,7 +5,9 @@ import com.talento.moby.exception.ResourceNotFoundException;
 import com.talento.moby.mappers.CandidateMapper;
 import com.talento.moby.models.dto.CandidateDto;
 import com.talento.moby.models.entities.Candidate;
+import com.talento.moby.models.entities.Technology;
 import com.talento.moby.repositories.CandidateRepository;
+import com.talento.moby.repositories.TechnologyRepository;
 import com.talento.moby.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -20,6 +22,9 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Autowired
     private CandidateRepository candidateRepository;
+
+    @Autowired
+    private TechnologyRepository technologyRepository;
 
     @Override
     @Transactional
@@ -36,13 +41,11 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public Candidate getOne(Long candidateId) {
-
         try {
             return candidateRepository.findById(candidateId).get();
         } catch (Exception e) {
             throw new ResourceNotFoundException("the resource does not exist");
         }
-
     }
 
     @Override
@@ -78,5 +81,14 @@ public class CandidateServiceImpl implements CandidateService {
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
         return candidateRepository.findAll(Sort.by("surname"));
+    }
+
+    @Override
+    public Candidate addTechnology(Long candidateId, Long techId) {
+        Candidate candidate = Optional.of(candidateRepository.findById(candidateId)).get().orElseThrow(BadRequestException::new);
+        Technology technology = Optional.of(technologyRepository.findById(techId)).get().orElseThrow(BadRequestException::new);
+        candidate.addTechnology(technology);
+
+        return candidateRepository.save(candidate);
     }
 }
