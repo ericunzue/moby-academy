@@ -1,6 +1,6 @@
 package com.talento.moby.models.enums;
 
-public enum Type {
+public enum DocumentType {
     DNI,
     LE,
     LC;

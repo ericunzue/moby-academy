@@ -6,6 +6,7 @@ import com.talento.moby.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,11 @@ public class CandidateController {
         return candidateService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Candidate> getOne(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(candidateService.getOne(id), HttpStatus.ACCEPTED);
+    }
+
     @PostMapping(value = "/save")
     public ResponseEntity<Candidate> save(@Valid @RequestBody CandidateDto newCandidate) {
         return new ResponseEntity<>(candidateService.save(newCandidate), HttpStatus.CREATED);
@@ -37,5 +43,10 @@ public class CandidateController {
     @PutMapping("/{id}")
     public ResponseEntity<Candidate> update(@PathVariable("id") Long id, @Valid @RequestBody CandidateDto candidateInformation) {
         return new ResponseEntity<>(candidateService.update(id, candidateInformation), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Candidate> delete(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(candidateService.delete(id), HttpStatus.OK);
     }
 }

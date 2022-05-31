@@ -20,7 +20,7 @@ public class CandidateMapper {
                 .build();
     }
 
-    public static Candidate candidateDtoToCandiate(CandidateDto candidateDto) {
+    public static Candidate candidateDtoToCandidate(CandidateDto candidateDto) {
         return Candidate.builder()
                 .id(candidateDto.getId())
                 .name(candidateDto.getName())

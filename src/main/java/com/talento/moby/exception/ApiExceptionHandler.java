@@ -11,20 +11,22 @@ import java.time.ZonedDateTime;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})
-    public ResponseEntity<ResponseMessage> resourceNotFoundException() {
+    public ResponseEntity<ResponseMessage> resourceNotFoundException(ResourceNotFoundException exception) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
         ExceptionMessage apiException = new ExceptionMessage(
                 notFound,
+                exception.getMessage(),
                 ZonedDateTime.now()
         );
         return new ResponseEntity<>(apiException, notFound);
     }
 
     @ExceptionHandler(value = {BadRequestException.class})
-    public ResponseEntity<ResponseMessage> badRequestException() {
+    public ResponseEntity<ResponseMessage> badRequestException(BadRequestException exception) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         ExceptionMessage apiException = new ExceptionMessage(
                 badRequest,
+                exception.getMessage(),
                 ZonedDateTime.now()
         );
         return new ResponseEntity<>(apiException, badRequest);

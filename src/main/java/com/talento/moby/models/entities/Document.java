@@ -1,7 +1,6 @@
 package com.talento.moby.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.talento.moby.models.enums.Type;
+import com.talento.moby.models.enums.DocumentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -36,12 +34,9 @@ public class Document {
     @Min(value = 8, message = "number must be at least 8 digits long")
     private int number;
 
-    @JsonIgnore()
-    @OneToOne()
-    private Candidate candidate;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "dniType", nullable = false)
-    private Type type;
+    private DocumentType type;
 }

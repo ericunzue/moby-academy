@@ -25,17 +25,23 @@ public class CandidateServiceImpl implements CandidateService {
     @Transactional
     public Candidate save(CandidateDto newCandidate) {
 
-        return Optional.of(candidateRepository.save(CandidateMapper.candidateDtoToCandiate(newCandidate)))
-                .orElseThrow(BadRequestException::new);
+        try {
+            return candidateRepository.save(CandidateMapper.candidateDtoToCandidate(newCandidate));
+        } catch (Exception e) {
+            throw new BadRequestException("dni number is already in use");
+        }
 
     }
 
     @Override
     @Transactional(readOnly = true)
     public Candidate getOne(Long candidateId) {
-        return Optional.of(candidateRepository.findById(candidateId))
-                .get()
-                .orElseThrow(ResourceNotFoundException::new);
+
+        try {
+            return candidateRepository.findById(candidateId).get();
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("the resource does not exist");
+        }
 
     }
 
@@ -58,11 +64,14 @@ public class CandidateServiceImpl implements CandidateService {
     @Transactional
     public Candidate delete(Long candidateId) {
         Optional<Candidate> candidate = candidateRepository.findById(candidateId);
-        if (candidate.isPresent()) {
-            candidateRepository.delete(candidate.get());
-            return candidate.get();
+        try {
+            if (candidate.isPresent()) {
+                candidateRepository.deleteById(candidateId);
+            }
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("the resource does not exist");
         }
-        return null;
+        return candidate.get();
     }
 
     @Override

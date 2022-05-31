@@ -43,12 +43,12 @@ public class Candidate {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
-    @OneToOne(mappedBy = "candidate", cascade = {CascadeType.ALL})
-    @JoinColumn(name = "dniId")
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "dniId", referencedColumnName = "dniId")
     private Document dni;
 
 
-    @OneToMany()
+    @OneToMany(cascade = {CascadeType.ALL})
     @Column(name = "technologyId")
     List<Technology> technologies;
 
