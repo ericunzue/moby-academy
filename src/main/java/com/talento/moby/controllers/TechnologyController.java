@@ -26,13 +26,13 @@ public class TechnologyController {
     private TechnologyService technologyService;
 
     @GetMapping
-    public List<Technology> getAll() {
-        return technologyService.getAll();
+    public ResponseEntity<List<Technology>> getAll() {
+        return new ResponseEntity<>(technologyService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Technology> getOne(@PathVariable("id") Long technologyId) {
-        return new ResponseEntity<>(technologyService.getOne(technologyId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(technologyService.getById(technologyId), HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/save")

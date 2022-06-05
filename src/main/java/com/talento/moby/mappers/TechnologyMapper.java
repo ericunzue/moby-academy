@@ -23,11 +23,11 @@ public class TechnologyMapper {
                 .build();
     }
 
-    public static Technology technologyDtoToTechnology(TechnologyDto dto) {
+    public static Technology technologyDtoToTechnology(TechnologyDto technologyDto) {
         return Technology.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .version(dto.getVersion())
+                .id(technologyDto.getId())
+                .name(technologyDto.getName())
+                .version(technologyDto.getVersion())
                 .build();
     }
 }

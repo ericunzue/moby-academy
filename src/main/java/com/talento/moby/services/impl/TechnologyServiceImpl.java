@@ -23,16 +23,13 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public Technology save(TechnologyDto newTechnology) {
-        try {
-            return technologyRepository.save(TechnologyMapper.technologyDtoToTechnologyWithoutId(newTechnology));
-        } catch (Exception e) {
-            throw new BadRequestException();
-        }
+        return Optional.of(technologyRepository.save(TechnologyMapper.technologyDtoToTechnology(newTechnology)))
+                .orElseThrow(BadRequestException::new);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Technology getOne(Long technologyId) {
+    public Technology getById(Long technologyId) {
         try {
             return technologyRepository.findById(technologyId).get();
         } catch (Exception e) {

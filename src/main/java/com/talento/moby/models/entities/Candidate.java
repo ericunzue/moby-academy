@@ -28,7 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Candidate {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "candidateId")
     private Long id;
 

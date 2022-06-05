@@ -1,6 +1,8 @@
 package com.talento.moby.services.impl;
 
 import com.talento.moby.exception.BadRequestException;
+import com.talento.moby.exception.NoContentException;
+import com.talento.moby.exception.ResourceAlreadyExistsException;
 import com.talento.moby.exception.ResourceNotFoundException;
 import com.talento.moby.mappers.CandidateMapper;
 import com.talento.moby.models.dto.CandidateDto;
@@ -29,18 +31,14 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional
     public Candidate save(CandidateDto newCandidate) {
-
-        try {
-            return candidateRepository.save(CandidateMapper.candidateDtoToCandidate(newCandidate));
-        } catch (Exception e) {
-            throw new BadRequestException("dni number is already in use");
-        }
-
+        return Optional.of(candidateRepository.save(CandidateMapper.candidateDtoToCandidate(newCandidate)))
+                .orElseThrow(() -> new BadRequestException());
+        
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Candidate getOne(Long candidateId) {
+    public Candidate getById(Long candidateId) {
         try {
             return candidateRepository.findById(candidateId).get();
         } catch (Exception e) {
@@ -72,7 +70,7 @@ public class CandidateServiceImpl implements CandidateService {
                 candidateRepository.deleteById(candidateId);
             }
         } catch (Exception e) {
-            throw new ResourceNotFoundException("the resource does not exist");
+            throw new ResourceNotFoundException("User not found with candidateId " + candidateId);
         }
         return candidate.get();
     }
@@ -80,15 +78,24 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
+        List<Candidate> candidates = candidateRepository.findAll();
+
+        if (candidates.isEmpty()) {
+            throw new NoContentException();
+        }
         return candidateRepository.findAll(Sort.by("surname"));
     }
 
     @Override
     public Candidate addTechnology(Long candidateId, Long techId) {
-        Candidate candidate = Optional.of(candidateRepository.findById(candidateId)).get().orElseThrow(BadRequestException::new);
-        Technology technology = Optional.of(technologyRepository.findById(techId)).get().orElseThrow(BadRequestException::new);
-        candidate.addTechnology(technology);
+        Candidate candidate = candidateRepository.findById(candidateId).orElseThrow(BadRequestException::new);
+        Technology technology = technologyRepository.findById(techId).orElseThrow(BadRequestException::new);
+        if (!candidate.getTechnologies().contains(technology)) {
+            candidate.addTechnology(technology);
+            return candidateRepository.save(candidate);
+        } else {
+            throw new ResourceAlreadyExistsException("Candidate already has the technology " + technology);
+        }
 
-        return candidateRepository.save(candidate);
     }
 }
