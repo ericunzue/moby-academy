@@ -27,12 +27,8 @@ public class CandidateController {
 
     @GetMapping
     public ResponseEntity<List<Candidate>> getAll() {
-        List<Candidate> candidates = candidateService.getAll();
-        if (candidates.isEmpty()) {
-            return new ResponseEntity<>(candidates, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(candidates, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(candidateService.getAll(), HttpStatus.OK);
+
     }
 
     @GetMapping("/{id}")
