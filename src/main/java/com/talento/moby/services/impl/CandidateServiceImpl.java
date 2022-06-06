@@ -4,7 +4,6 @@ import com.talento.moby.exception.BadRequestException;
 import com.talento.moby.exception.NoContentException;
 import com.talento.moby.exception.ResourceAlreadyExistsException;
 import com.talento.moby.exception.ResourceNotFoundException;
-import com.talento.moby.mappers.CandidateMapper;
 import com.talento.moby.models.dto.CandidateDto;
 import com.talento.moby.models.entities.Candidate;
 import com.talento.moby.models.entities.Technology;
@@ -19,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.talento.moby.mappers.CandidateMapper.mapToCandidate;
+
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
@@ -30,10 +31,10 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     @Transactional
-    public Candidate save(CandidateDto newCandidate) {
-        return Optional.of(candidateRepository.save(CandidateMapper.candidateDtoToCandidate(newCandidate)))
+    public Candidate save(CandidateDto newCandidateDto) {
+        return Optional.of(candidateRepository.save(mapToCandidate(newCandidateDto)))
                 .orElseThrow(() -> new BadRequestException());
-        
+
     }
 
     @Override
@@ -42,7 +43,7 @@ public class CandidateServiceImpl implements CandidateService {
         try {
             return candidateRepository.findById(candidateId).get();
         } catch (Exception e) {
-            throw new ResourceNotFoundException("the resource does not exist");
+            throw new ResourceNotFoundException("Candidate not found with candidateId" + candidateId);
         }
     }
 
@@ -51,7 +52,7 @@ public class CandidateServiceImpl implements CandidateService {
     public Candidate update(Long candidateId, CandidateDto candidateInformation) {
         Candidate candidate = Optional.of(candidateRepository.findById(candidateId))
                 .get()
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("candidate not found with candidateId " + candidateId));
 
         candidate.setName(candidateInformation.getName());
         candidate.setSurname(candidateInformation.getSurname());
@@ -70,7 +71,7 @@ public class CandidateServiceImpl implements CandidateService {
                 candidateRepository.deleteById(candidateId);
             }
         } catch (Exception e) {
-            throw new ResourceNotFoundException("User not found with candidateId " + candidateId);
+            throw new ResourceNotFoundException("Candidate not found with candidateId " + candidateId);
         }
         return candidate.get();
     }
@@ -78,12 +79,12 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
-        List<Candidate> candidates = candidateRepository.findAll();
+        List<Candidate> candidates = candidateRepository.findAll(Sort.by("surname"));
 
         if (candidates.isEmpty()) {
             throw new NoContentException();
         }
-        return candidateRepository.findAll(Sort.by("surname"));
+        return candidates;
     }
 
     @Override
