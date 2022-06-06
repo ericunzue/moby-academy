@@ -80,7 +80,6 @@ public class CandidateServiceImpl implements CandidateService {
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
         List<Candidate> candidates = candidateRepository.findAll(Sort.by("surname"));
-
         if (candidates.isEmpty()) {
             throw new NoContentException();
         }
@@ -97,6 +96,5 @@ public class CandidateServiceImpl implements CandidateService {
         } else {
             throw new ResourceAlreadyExistsException("Candidate already has the technology " + technology);
         }
-
     }
 }

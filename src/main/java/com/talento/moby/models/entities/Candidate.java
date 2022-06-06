@@ -39,9 +39,9 @@ public class Candidate {
 
     private String surname;
 
-    @Column(name = "birthday", nullable = false)
+    @Column(name = "birthDate", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthday;
+    private LocalDate birthDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "dniId", referencedColumnName = "dniId")

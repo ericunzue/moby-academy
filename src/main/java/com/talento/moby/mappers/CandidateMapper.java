@@ -15,7 +15,7 @@ public class CandidateMapper {
                 .name(candidate.getName())
                 .surname(candidate.getSurname())
                 .dni(candidate.getDni())
-                .birthday(candidate.getBirthday())
+                .birthday(candidate.getBirthDate())
                 .technologies(candidate.getTechnologies())
                 .build();
     }
@@ -26,7 +26,7 @@ public class CandidateMapper {
                 .name(candidateDto.getName())
                 .surname(candidateDto.getSurname())
                 .dni(candidateDto.getDni())
-                .birthday(candidateDto.getBirthday())
+                .birthDate(candidateDto.getBirthday())
                 .technologies(candidateDto.getTechnologies())
                 .build();
     }
