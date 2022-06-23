@@ -8,7 +8,7 @@ import java.util.List;
 public interface CandidateService {
     Candidate save(CandidateDto newCandidate);
 
-    Candidate getOne(Long candidateId);
+    Candidate getById(Long candidateId);
 
     Candidate update(Long candidateId, CandidateDto candidateInformation);
 

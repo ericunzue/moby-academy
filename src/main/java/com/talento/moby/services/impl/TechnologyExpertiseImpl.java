@@ -19,7 +19,7 @@ public class TechnologyExpertiseImpl implements TechnologyExpertiseService {
     }
 
     @Override
-    public TechnologyExpertise getOne(Long technologyId) {
+    public TechnologyExpertise getById(Long technologyId) {
         return null;
     }
 

@@ -31,4 +31,26 @@ public class ApiExceptionHandler {
         );
         return new ResponseEntity<>(apiException, badRequest);
     }
+
+    @ExceptionHandler(value = {ResourceAlreadyExistsException.class})
+    public ResponseEntity<ResponseMessage> resourceAlreadyExistsException(BadRequestException exception) {
+        HttpStatus conflict = HttpStatus.CONFLICT;
+        ExceptionMessage apiException = new ExceptionMessage(
+                conflict,
+                exception.getMessage(),
+                ZonedDateTime.now()
+        );
+        return new ResponseEntity<>(apiException, conflict);
+    }
+
+    @ExceptionHandler(value = {NoContentException.class})
+    public ResponseEntity<ResponseMessage> noContentException(BadRequestException exception) {
+        HttpStatus noContent = HttpStatus.NO_CONTENT;
+        ExceptionMessage apiException = new ExceptionMessage(
+                noContent,
+                exception.getMessage(),
+                ZonedDateTime.now()
+        );
+        return new ResponseEntity<>(apiException, noContent);
+    }
 }

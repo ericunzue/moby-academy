@@ -7,7 +7,7 @@ import java.util.List;
 public interface TechnologyExpertiseService {
     TechnologyExpertise save(TechnologyExpertise newTechnology);
 
-    TechnologyExpertise getOne(Long technologyId);
+    TechnologyExpertise getById(Long technologyId);
 
     TechnologyExpertise update(Long technologyId, TechnologyExpertise technologyInformation);
 

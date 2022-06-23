@@ -1,8 +1,8 @@
 package com.talento.moby.services.impl;
 
 import com.talento.moby.exception.BadRequestException;
+import com.talento.moby.exception.NoContentException;
 import com.talento.moby.exception.ResourceNotFoundException;
-import com.talento.moby.mappers.TechnologyMapper;
 import com.talento.moby.models.dto.TechnologyDto;
 import com.talento.moby.models.entities.Technology;
 import com.talento.moby.repositories.TechnologyRepository;
@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.talento.moby.mappers.TechnologyMapper.mapToTechnology;
+
 @Service
 public class TechnologyServiceImpl implements TechnologyService {
 
@@ -23,20 +25,17 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public Technology save(TechnologyDto newTechnology) {
-        try {
-            return technologyRepository.save(TechnologyMapper.technologyDtoToTechnologyWithoutId(newTechnology));
-        } catch (Exception e) {
-            throw new BadRequestException();
-        }
+        return Optional.of(technologyRepository.save(mapToTechnology(newTechnology)))
+                .orElseThrow(BadRequestException::new);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Technology getOne(Long technologyId) {
+    public Technology getById(Long technologyId) {
         try {
             return technologyRepository.findById(technologyId).get();
         } catch (Exception e) {
-            throw new ResourceNotFoundException("the resource does not exist");
+            throw new ResourceNotFoundException("Technology not found with technologyId " + technologyId);
         }
     }
 
@@ -45,7 +44,7 @@ public class TechnologyServiceImpl implements TechnologyService {
     public Technology update(Long technologyId, TechnologyDto technologyInformation) {
         Technology technology = Optional.of(technologyRepository.findById(technologyId))
                 .get()
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with technologyId " + technologyId));
 
         technology.setName(technologyInformation.getName());
         technology.setVersion(technologyInformation.getVersion());
@@ -56,20 +55,17 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public Technology delete(Long technologyId) {
-        Optional<Technology> technology = technologyRepository.findById(technologyId);
-        try {
-            if (technology.isPresent()) {
-                technologyRepository.deleteById(technologyId);
-            }
-        } catch (Exception e) {
-            throw new ResourceNotFoundException("the resource does not exist");
-        }
-        return technology.get();
+        return Optional.of(technologyRepository.findById(technologyId)).get()
+                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with technologyId " + technologyId));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Technology> getAll() {
-        return technologyRepository.findAll();
+        List<Technology> technologies = technologyRepository.findAll();
+        if (technologies.isEmpty()) {
+            throw new NoContentException();
+        }
+        return technologies;
     }
 }

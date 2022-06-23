@@ -8,7 +8,7 @@ import java.util.List;
 public interface TechnologyService {
     Technology save(TechnologyDto newTechnology);
 
-    Technology getOne(Long technologyId);
+    Technology getById(Long technologyId);
 
     Technology update(Long technologyId, TechnologyDto technologyInformation);
 

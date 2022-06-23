@@ -27,13 +27,13 @@ public class CandidateController {
 
     @GetMapping
     public ResponseEntity<List<Candidate>> getAll() {
-
         return new ResponseEntity<>(candidateService.getAll(), HttpStatus.OK);
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Candidate> getOne(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(candidateService.getOne(id), HttpStatus.ACCEPTED);
+    public ResponseEntity<Candidate> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(candidateService.getById(id), HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/save")
@@ -51,7 +51,7 @@ public class CandidateController {
         return new ResponseEntity<>(candidateService.delete(id), HttpStatus.OK);
     }
 
-    @PutMapping("/technology/add/{candidateId}/{technologyId}")
+    @PutMapping("/add/technology/{candidateId}/{technologyId}")
     public ResponseEntity<Candidate> addTechnology(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId) {
         return new ResponseEntity<>(candidateService.addTechnology(candidateId, technologyId), HttpStatus.OK);
     }
