@@ -33,8 +33,7 @@ public class CandidateServiceImpl implements CandidateService {
     @Transactional
     public Candidate save(CandidateDto newCandidateDto) {
         return Optional.of(candidateRepository.save(mapToCandidate(newCandidateDto)))
-                .orElseThrow(() -> new BadRequestException());
-
+                .orElseThrow(BadRequestException::new);
     }
 
     @Override
