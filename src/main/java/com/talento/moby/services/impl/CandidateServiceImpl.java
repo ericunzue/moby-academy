@@ -78,11 +78,9 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
-        List<Candidate> candidates = candidateRepository.findAll(Sort.by("surname"));
-        if (candidates.isEmpty()) {
-            throw new NoContentException();
-        }
-        return candidates;
+
+        return  Optional.of(candidateRepository.findAll(Sort.by("surname"))).orElse(null);
+
     }
 
     @Override
