@@ -57,11 +57,11 @@ public class CandidateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-   /* @PutMapping("/add/technology/{candidateId}/{technologyId}")
-    public ResponseEntity<HttpStatus> addTechnology(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId, @RequestBody int expertise) {
-        technologyExpertiseService.save(technologyId, candidateId, expertise);
+    @PutMapping("/add/technology/{candidateId}/{technologyId}")
+    public ResponseEntity<HttpStatus> addTechnology(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId, @Valid @RequestBody int expertise) {
+        technologyExpertiseService.save(candidateId, technologyId, expertise);
         return new ResponseEntity<>(HttpStatus.OK);
-    }*/
+    }
 
     @GetMapping("/technologies/{candidateId}")
     public ResponseEntity<CandidateWithTechnologiesDto> getTechnologies(@PathVariable("candidateId") Long candidateId) {

@@ -1,7 +1,7 @@
 package com.talento.moby.models.dto;
 
 import com.talento.moby.models.entities.Document;
-import com.talento.moby.models.entities.Technology;
+import com.talento.moby.models.entities.TechnologyExpertise;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ import java.util.List;
 public class CandidateDto {
 
     private Long id;
-    
+
     @NotBlank()
     @Size(min = 1, message = "name cannot be empty")
     private String name;
@@ -38,5 +38,5 @@ public class CandidateDto {
     private LocalDate birthday;
 
 
-    private List<Technology> technologies;
+    private List<TechnologyExpertise> technologies;
 }

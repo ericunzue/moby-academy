@@ -11,7 +11,8 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "technologiesExpertise")
@@ -19,6 +20,8 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Valid
+
 public class TechnologyExpertise {
 
     @Id
@@ -32,6 +35,6 @@ public class TechnologyExpertise {
     private Candidate candidate;
 
     @Column(name = "expertiseInYears")
-    @NotEmpty(message = "years cannot be empty")
+    @Min(value = 1, message = "Expertise cannot be 0")
     private int years;
 }

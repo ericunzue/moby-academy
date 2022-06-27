@@ -13,11 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Entity
@@ -27,6 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Candidate {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "candidateId")
@@ -36,7 +35,6 @@ public class Candidate {
     private String name;
 
     @Column(name = "surname", nullable = false)
-
     private String surname;
 
     @Column(name = "birthDate", nullable = false)
@@ -44,15 +42,8 @@ public class Candidate {
     private LocalDate birthDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "dniId", referencedColumnName = "dniId")
+    @JoinColumn(name = "dniId", unique = true, referencedColumnName = "dniId")
     private Document dni;
 
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    @Column(name = "technologyId")
-    List<Technology> technologies;
-
-    public void addTechnology(Technology technology) {
-        this.technologies.add(technology);
-    }
 }

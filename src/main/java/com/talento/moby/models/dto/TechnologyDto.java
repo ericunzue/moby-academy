@@ -15,6 +15,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @Valid
 public class TechnologyDto {
+    
     private Long id;
 
     @NotEmpty(message = "Name cannot be blank")
