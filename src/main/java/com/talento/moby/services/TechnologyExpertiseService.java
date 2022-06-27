@@ -1,11 +1,12 @@
 package com.talento.moby.services;
 
 import com.talento.moby.models.entities.TechnologyExpertise;
+import com.talento.moby.models.projections.TechnologyExpertiseProjection;
 
 import java.util.List;
 
 public interface TechnologyExpertiseService {
-    TechnologyExpertise save(TechnologyExpertise newTechnology);
+    void save(Long candidateId, Long technologyId, int expertise);
 
     TechnologyExpertise getById(Long technologyId);
 
@@ -14,5 +15,8 @@ public interface TechnologyExpertiseService {
     TechnologyExpertise delete(Long technologyId);
 
     List<TechnologyExpertise> getAll();
+
+    List<TechnologyExpertiseProjection> getTechnologiesAndYearsOfExperienceByCandidate(Long candidateId);
+
 }
 

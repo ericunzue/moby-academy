@@ -1,8 +1,10 @@
 package com.talento.moby.controllers;
 
 import com.talento.moby.models.dto.CandidateDto;
+import com.talento.moby.models.dto.CandidateWithTechnologiesDto;
 import com.talento.moby.models.entities.Candidate;
 import com.talento.moby.services.CandidateService;
+import com.talento.moby.services.TechnologyExpertiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
+
+    @Autowired
+    private TechnologyExpertiseService technologyExpertiseService;
 
     @GetMapping
     public ResponseEntity<List<Candidate>> getAll() {
@@ -47,12 +52,19 @@ public class CandidateController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Candidate> delete(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(candidateService.delete(id), HttpStatus.OK);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
+        candidateService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/add/technology/{candidateId}/{technologyId}")
-    public ResponseEntity<Candidate> addTechnology(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId) {
-        return new ResponseEntity<>(candidateService.addTechnology(candidateId, technologyId), HttpStatus.OK);
+   /* @PutMapping("/add/technology/{candidateId}/{technologyId}")
+    public ResponseEntity<HttpStatus> addTechnology(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId, @RequestBody int expertise) {
+        technologyExpertiseService.save(technologyId, candidateId, expertise);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }*/
+
+    @GetMapping("/technologies/{candidateId}")
+    public ResponseEntity<CandidateWithTechnologiesDto> getTechnologies(@PathVariable("candidateId") Long candidateId) {
+        return new ResponseEntity<>(candidateService.getTechnologies(candidateId), HttpStatus.OK);
     }
 }
