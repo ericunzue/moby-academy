@@ -10,13 +10,14 @@ import com.talento.moby.services.TechnologyExpertiseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-public class TechnologyExpertiseImpl implements TechnologyExpertiseService {
+public class TechnologyExpertiseServiceImpl implements TechnologyExpertiseService {
     @Autowired
     private TechnologyExpertiseRepository technologyExpertiseRepository;
 
@@ -68,13 +69,12 @@ public class TechnologyExpertiseImpl implements TechnologyExpertiseService {
 
     @Override
     public List<TechnologyExpertiseProjection> getTechnologiesAndYearsOfExperienceByCandidate(Long candidateId) {
-
         return Optional.of(technologyExpertiseRepository.getTechnologiesAndYearsOfExperienceByCandidate(candidateId)).orElse(null);
-
     }
 
     @Override
+    @Transactional
     public void deleteTechnologyExpertiseByCandidate(Long candidateId, Long technologyId) {
-        technologyExpertiseRepository.deleteTechnologyExpertiseByCandidate(candidateId,technologyId);
+        technologyExpertiseRepository.deleteTechnologyExpertiseByCandidate(candidateId, technologyId);
     }
 }

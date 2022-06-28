@@ -5,14 +5,12 @@ import com.talento.moby.exception.ResourceNotFoundException;
 import com.talento.moby.models.dto.CandidateDto;
 import com.talento.moby.models.dto.CandidateWithTechnologiesDto;
 import com.talento.moby.models.entities.Candidate;
-import com.talento.moby.models.entities.Technology;
 import com.talento.moby.repositories.CandidateRepository;
 import com.talento.moby.repositories.TechnologyRepository;
 import com.talento.moby.services.CandidateService;
 import com.talento.moby.services.TechnologyExpertiseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,10 +76,9 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
-        return candidateRepository.findAll(Sort.by("surname"));
+        return candidateRepository.findAll();
 
     }
-
 
     public CandidateWithTechnologiesDto getTechnologies(Long candidateId) {
         var candidate = candidateRepository.findById(candidateId).orElseThrow(() -> {
@@ -91,6 +88,19 @@ public class CandidateServiceImpl implements CandidateService {
 
         var technologies = technologyExpertiseService.getTechnologiesAndYearsOfExperienceByCandidate(candidateId);
         return mapToCandidateWithTechnologiesDto(candidate, technologies);
-
     }
+
+    @Override
+    @Transactional
+    public void deleteExpertise(Long candidateId, Long technologyId) {
+        var technology = Optional.of(technologyRepository.getReferenceById(technologyId))
+                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + technologyId));
+
+        var candidate = Optional.of(candidateRepository.getReferenceById(candidateId))
+                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + candidateId));
+        technologyExpertiseService.deleteTechnologyExpertiseByCandidate(candidateId, technologyId);
+    }
+
 }
+
+

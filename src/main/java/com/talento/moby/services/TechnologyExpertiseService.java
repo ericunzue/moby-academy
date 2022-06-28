@@ -2,8 +2,10 @@ package com.talento.moby.services;
 
 import com.talento.moby.models.entities.TechnologyExpertise;
 import com.talento.moby.models.projections.TechnologyExpertiseProjection;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 public interface TechnologyExpertiseService {
     void save(Long candidateId, Long technologyId, int expertise);

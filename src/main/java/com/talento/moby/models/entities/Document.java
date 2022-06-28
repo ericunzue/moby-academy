@@ -42,8 +42,6 @@ public class Document {
     @Column(name = "dniType", nullable = false)
     private DocumentType type;
 
-    @OneToOne(mappedBy = "dni", cascade = CascadeType.ALL)
-    private Candidate candidate;
 
 
 }

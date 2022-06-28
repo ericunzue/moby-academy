@@ -18,4 +18,6 @@ public interface CandidateService {
     List<Candidate> getAll();
 
     CandidateWithTechnologiesDto getTechnologies(Long candidateId);
+
+    void deleteExpertise(Long candidateId, Long technologyId);
 }

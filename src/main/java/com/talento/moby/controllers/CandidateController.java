@@ -67,4 +67,10 @@ public class CandidateController {
     public ResponseEntity<CandidateWithTechnologiesDto> getTechnologies(@PathVariable("candidateId") Long candidateId) {
         return new ResponseEntity<>(candidateService.getTechnologies(candidateId), HttpStatus.OK);
     }
+
+    @DeleteMapping("/expertise/delete/{candidateId}/{technologyId}")
+    public ResponseEntity<HttpStatus> deleteCandidateExpertise(@PathVariable("candidateId") Long candidateId, @PathVariable("technologyId") Long technologyId){
+        candidateService.deleteExpertise(candidateId, technologyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
