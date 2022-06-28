@@ -73,8 +73,6 @@ public class CandidateServiceImpl implements CandidateService {
                 () -> {
                     throw new ResourceNotFoundException("Candidate not found with candidateId " + candidateId);
                 });
-
-
     }
 
     @Override
@@ -84,17 +82,6 @@ public class CandidateServiceImpl implements CandidateService {
 
     }
 
-    @Override
-    public Candidate addTechnology(Long candidateId, Long techId) {
-        Candidate candidate = candidateRepository.findById(candidateId).orElseThrow(BadRequestException::new);
-        Technology technology = technologyRepository.findById(techId).orElseThrow(BadRequestException::new);
-        // if (!candidate.getTechnologies().contains(technology)) {
-
-        return candidateRepository.save(candidate);
-        //} else {
-        //    throw new ResourceAlreadyExistsException("Candidate already has the technology " + technology);
-        //}
-    }
 
     public CandidateWithTechnologiesDto getTechnologies(Long candidateId) {
         var candidate = candidateRepository.findById(candidateId).orElseThrow(() -> {

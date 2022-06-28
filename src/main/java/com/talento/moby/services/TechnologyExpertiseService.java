@@ -18,5 +18,7 @@ public interface TechnologyExpertiseService {
 
     List<TechnologyExpertiseProjection> getTechnologiesAndYearsOfExperienceByCandidate(Long candidateId);
 
+    void deleteTechnologyExpertiseByCandidate(Long candidateId, Long technologyId);
+
 }
 

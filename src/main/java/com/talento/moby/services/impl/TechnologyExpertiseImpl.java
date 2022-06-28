@@ -72,4 +72,9 @@ public class TechnologyExpertiseImpl implements TechnologyExpertiseService {
         return Optional.of(technologyExpertiseRepository.getTechnologiesAndYearsOfExperienceByCandidate(candidateId)).orElse(null);
 
     }
+
+    @Override
+    public void deleteTechnologyExpertiseByCandidate(Long candidateId, Long technologyId) {
+        technologyExpertiseRepository.deleteTechnologyExpertiseByCandidate(candidateId,technologyId);
+    }
 }

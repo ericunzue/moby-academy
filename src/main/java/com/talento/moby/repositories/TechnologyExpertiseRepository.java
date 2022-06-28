@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.talento.moby.utils.Querys.REMOVE_CANDIDATE_EXPERIENCE;
 import static com.talento.moby.utils.Querys.TECHNOLOGIES_AND_YEARS_OF_EXPERIENCE_BY_CANDIDATE;
 
 @Repository
@@ -17,4 +18,7 @@ public interface TechnologyExpertiseRepository extends JpaRepository<TechnologyE
 
     @Query(value = TECHNOLOGIES_AND_YEARS_OF_EXPERIENCE_BY_CANDIDATE, nativeQuery = true)
     List<TechnologyExpertiseProjection> getTechnologiesAndYearsOfExperienceByCandidate(Long candidateId);
+
+    @Query(value = REMOVE_CANDIDATE_EXPERIENCE, nativeQuery = true)
+    void deleteTechnologyExpertiseByCandidate(Long candidateId, Long technologyId);
 }
