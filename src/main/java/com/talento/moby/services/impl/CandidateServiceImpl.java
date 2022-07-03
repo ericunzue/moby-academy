@@ -11,6 +11,7 @@ import com.talento.moby.services.CandidateService;
 import com.talento.moby.services.TechnologyExpertiseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,10 +77,11 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public List<Candidate> getAll() {
-        return candidateRepository.findAll();
+        return Optional.of(candidateRepository.findAll(Sort.by("surname"))).orElse(null);
 
     }
 
+    @Transactional(readOnly = true)
     public CandidateWithTechnologiesDto getTechnologies(Long candidateId) {
         var candidate = candidateRepository.findById(candidateId).orElseThrow(() -> {
             log.error("Candidate not found with Id: " + candidateId);
