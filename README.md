@@ -1,4 +1,4 @@
-# evaluacion-tecnica-mobyacademy
+# Evaluacion-técnica-mobyacademy
 
 MobyDigital
 
@@ -18,5 +18,10 @@ en múltiples tecnologías y una tecnología puede estar asociada a múltiples c
 - API Rest (CRUD) para Candidato y Tecnología. Esto implica: Crear controladores, servicios, repositorios y entidades.
 - BD en memoria (por ejemplo, H2).
 - Validaciones de campos obligatorios, de fecha y númericos.
-- Creación, uso y manejo de al menos 2 excepciones. 
+- Creación, uso y manejo de al menos 2 excepciones.
 - Crear Logs en donde consideres.
+- Funcionalidad listar Candidatos de X Tecnología. Recibe un texto por ejemplo “Java” y devuelve los
+  datos del Candidato y años de experiencia en dicha Tecnología. Si existen varias versiones de la misma tecnología, se
+  listan aquellas que coincidan con el nombre exacto.
+- Exponer a través de Swagger los APIs creados.
+- Test unitarios y/o de integración.

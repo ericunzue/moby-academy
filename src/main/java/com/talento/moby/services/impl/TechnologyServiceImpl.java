@@ -4,9 +4,12 @@ import com.talento.moby.exception.BadRequestException;
 import com.talento.moby.exception.NoContentException;
 import com.talento.moby.exception.ResourceNotFoundException;
 import com.talento.moby.models.dto.TechnologyDto;
+import com.talento.moby.models.dto.TechnologyWithCandidatesDto;
 import com.talento.moby.models.entities.Technology;
+import com.talento.moby.models.projections.CandidatesExpertiseProjection;
 import com.talento.moby.repositories.TechnologyRepository;
 import com.talento.moby.services.TechnologyService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,7 @@ import java.util.Optional;
 import static com.talento.moby.mappers.TechnologyMapper.mapToTechnology;
 
 @Service
+@Log
 public class TechnologyServiceImpl implements TechnologyService {
 
     @Autowired
@@ -68,4 +72,29 @@ public class TechnologyServiceImpl implements TechnologyService {
         }
         return technologies;
     }
+
+    @Override
+    public TechnologyWithCandidatesDto getCandidates(TechnologyDto technologyDto) {
+
+        var technology = this.findByNameAndVersion(technologyDto);
+        System.out.println(technology.get());
+        List<CandidatesExpertiseProjection> candidates;
+
+        if (technology.isPresent()) {
+            candidates = technologyRepository.getCandidates(technology.get().getId());
+            return new TechnologyWithCandidatesDto(technology.get(), candidates);
+        } else {
+            throw new NoContentException();
+        }
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Technology> findByNameAndVersion(TechnologyDto technologyDto) {
+        return Optional.ofNullable(technologyRepository.findTechnologyBy(technologyDto.getName(), technologyDto.getVersion())
+                .orElseThrow(() -> new ResourceNotFoundException("Technology not found")));
+    }
+
+
 }

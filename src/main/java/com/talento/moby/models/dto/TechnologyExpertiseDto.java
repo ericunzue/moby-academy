@@ -5,22 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@Valid
-public class TechnologyDto {
-    
-    private Long id;
+public class TechnologyExpertiseDto {
+
+    @NotEmpty(message = "Name cannot be blank")
+    private Long technologyId;
 
     @NotEmpty(message = "Name cannot be blank")
     private String name;
 
-    @Min(value = 1)
+    @NotEmpty(message = "Name cannot be blank")
     private int version;
+
+    @NotEmpty(message = "Name cannot be blank")
+    private int expertise;
 }
