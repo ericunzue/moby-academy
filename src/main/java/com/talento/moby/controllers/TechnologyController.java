@@ -1,6 +1,7 @@
 package com.talento.moby.controllers;
 
 import com.talento.moby.models.dto.TechnologyDto;
+import com.talento.moby.models.dto.TechnologyWithCandidatesDto;
 import com.talento.moby.models.entities.Technology;
 import com.talento.moby.services.TechnologyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,12 @@ public class TechnologyController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Technology> delete(@PathVariable("id") Long technologyId) {
         return new ResponseEntity<>(technologyService.delete(technologyId), HttpStatus.OK);
+    }
+
+    @GetMapping("candidates")
+    public ResponseEntity<TechnologyWithCandidatesDto> getCandidatesByTechnology(@RequestBody TechnologyDto technologyDto) {
+
+        return new ResponseEntity<>(technologyService.getCandidates(technologyDto), HttpStatus.OK);
     }
 
 }
