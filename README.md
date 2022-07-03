@@ -25,3 +25,8 @@ en múltiples tecnologías y una tecnología puede estar asociada a múltiples c
   listan aquellas que coincidan con el nombre exacto.
 - Exponer a través de Swagger los APIs creados.
 - Test unitarios y/o de integración.
+
+# Swagger
+
+- http://localhost:8080/v2/api-docs
+- http://localhost:8080/swagger-ui/
