@@ -100,7 +100,10 @@ public class CandidateServiceImpl implements CandidateService {
 
         var candidate = Optional.of(candidateRepository.getReferenceById(candidateId))
                 .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + candidateId));
-        technologyExpertiseService.deleteTechnologyExpertiseByCandidate(candidateId, technologyId);
+        if (technology != null && candidate != null) {
+            technologyExpertiseService.deleteTechnologyExpertiseByCandidate(candidateId, technologyId);
+
+        }
     }
 
 }

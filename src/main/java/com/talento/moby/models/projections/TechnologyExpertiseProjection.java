@@ -2,6 +2,7 @@ package com.talento.moby.models.projections;
 
 import org.springframework.beans.factory.annotation.Value;
 
+
 public interface TechnologyExpertiseProjection {
 
     @Value("#{target.technology_id}")
