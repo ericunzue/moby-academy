@@ -19,7 +19,7 @@ public class CandidateMapper {
                 .name(candidate.getName())
                 .surname(candidate.getSurname())
                 .dni(candidate.getDni())
-                .birthday(candidate.getBirthDate())
+                .birthDate(candidate.getBirthDate())
                 //.technologies(candidate.getTechnologies())
                 .build();
     }
@@ -30,7 +30,7 @@ public class CandidateMapper {
                 .name(candidateDto.getName())
                 .surname(candidateDto.getSurname())
                 .dni(candidateDto.getDni())
-                .birthDate(candidateDto.getBirthday())
+                .birthDate(candidateDto.getBirthDate())
                 //.technologies(candidateDto.getTechnologies())
                 .build();
     }

@@ -35,7 +35,7 @@ public class CandidateDto {
     private Document dni;
 
     @Past(message = "birthday cannot be future")
-    private LocalDate birthday;
+    private LocalDate birthDate;
 
 
     private List<TechnologyExpertise> technologies;

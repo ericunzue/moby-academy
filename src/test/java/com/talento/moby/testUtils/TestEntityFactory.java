@@ -62,11 +62,30 @@ public class TestEntityFactory {
                 .build();
     }
 
+    public static Candidate get_candidate_without_id() {
+        return Candidate.builder()
+                .name("Marta")
+                .surname("Petrona")
+                .birthDate(null)
+                .dni(get_document())
+                .build();
+    }
+
     public static CandidateDto get_candidate_dto() {
         return CandidateDto.builder()
-                .name("Pedro")
-                .surname("Pedrin")
-                .birthday(null)
+                .name("Marta")
+                .surname("Petrona")
+                .birthDate(null)
+                .dni(get_document())
+                .build();
+    }
+
+    public static CandidateDto get_candidate_dto_with_id() {
+        return CandidateDto.builder()
+                .id(1L)
+                .name("Marta")
+                .surname("Petrona")
+                .birthDate(null)
                 .dni(get_document())
                 .build();
     }

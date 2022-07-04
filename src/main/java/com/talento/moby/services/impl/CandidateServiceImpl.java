@@ -57,8 +57,8 @@ public class CandidateServiceImpl implements CandidateService {
 
         candidate.setName(candidateInformation.getName());
         candidate.setSurname(candidateInformation.getSurname());
+        candidate.setBirthDate(candidateInformation.getBirthDate());
         candidate.setDni(candidateInformation.getDni());
-
         return candidateRepository.save(candidate);
     }
 
