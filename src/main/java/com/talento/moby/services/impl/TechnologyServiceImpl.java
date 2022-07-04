@@ -77,7 +77,7 @@ public class TechnologyServiceImpl implements TechnologyService {
     public TechnologyWithCandidatesDto getCandidates(TechnologyDto technologyDto) {
 
         var technology = this.findByNameAndVersion(technologyDto);
-        System.out.println(technology.get());
+
         List<CandidatesExpertiseProjection> candidates;
 
         if (technology.isPresent()) {
@@ -90,7 +90,7 @@ public class TechnologyServiceImpl implements TechnologyService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+
     public Optional<Technology> findByNameAndVersion(TechnologyDto technologyDto) {
         return Optional.ofNullable(technologyRepository.findTechnologyBy(technologyDto.getName(), technologyDto.getVersion())
                 .orElseThrow(() -> new ResourceNotFoundException("Technology not found")));

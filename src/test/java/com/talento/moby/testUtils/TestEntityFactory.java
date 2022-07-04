@@ -2,9 +2,13 @@ package com.talento.moby.testUtils;
 
 import com.talento.moby.models.dto.CandidateDto;
 import com.talento.moby.models.dto.CandidateWithTechnologiesDto;
+import com.talento.moby.models.dto.TechnologyDto;
+import com.talento.moby.models.dto.TechnologyWithCandidatesDto;
 import com.talento.moby.models.entities.Candidate;
 import com.talento.moby.models.entities.Document;
+import com.talento.moby.models.entities.Technology;
 import com.talento.moby.models.enums.DocumentType;
+import com.talento.moby.models.projections.CandidatesExpertiseProjection;
 import com.talento.moby.models.projections.TechnologyExpertiseProjection;
 
 import java.time.LocalDate;
@@ -72,13 +76,13 @@ public class TestEntityFactory {
                 .id(1L)
                 .name("Marta")
                 .surname("Petrona")
-                .technologies(get_projection_technologies())
+                .technologies(get_projection_technologies_list())
                 .build();
     }
 
     //Technologies
 
-    public static List<TechnologyExpertiseProjection> get_projection_technologies() {
+    public static List<TechnologyExpertiseProjection> get_projection_technologies_list() {
         List<TechnologyExpertiseProjection> technologies = new ArrayList<>();
 
         LongStream.range(0, 5).forEach(i -> {
@@ -135,5 +139,68 @@ public class TestEntityFactory {
 
     }
 
+    public static List<Technology> get_technologies() {
+        List<Technology> technologies = new ArrayList<>();
+
+        LongStream.range(0, 5).forEach(i -> {
+            Technology c = new Technology(i, "Name" + i, (int) (i + 3));
+            technologies.add(c);
+        });
+        return technologies;
+    }
+
+    public static Technology get_technology() {
+        return Technology.builder()
+                .id(1L)
+                .name("Java")
+                .version(8)
+                .build();
+    }
+
+    public static TechnologyDto get_technology_dto() {
+        return TechnologyDto.builder()
+                .name("Java")
+                .version(8)
+                .build();
+    }
+
+    public static TechnologyWithCandidatesDto get_technologies_with_candidates() {
+        return TechnologyWithCandidatesDto.builder()
+                .technology(get_technology())
+                .candidates(get_candidates_expertise_projection_list())
+                .build();
+    }
+
+    public static List<CandidatesExpertiseProjection> get_candidates_expertise_projection_list() {
+        List<CandidatesExpertiseProjection> candidatesExpertise = new ArrayList<>();
+        LongStream.range(0, 5).forEach(i -> {
+            candidatesExpertise.add(get_candidates_expertise_projection(i));
+        });
+        return candidatesExpertise;
+    }
+
+    public static CandidatesExpertiseProjection get_candidates_expertise_projection(Long id) {
+        return new CandidatesExpertiseProjection() {
+            @Override
+            public String getName() {
+                return "Candidate name" + id;
+            }
+
+            @Override
+            public void setName(String name) {
+
+            }
+
+            @Override
+            public int getExpertise() {
+                return 2;
+            }
+
+            @Override
+            public void setExpertise(int expertise) {
+
+            }
+        };
+    }
 
 }

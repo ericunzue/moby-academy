@@ -32,7 +32,7 @@ public class TechnologyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Technology> getOne(@PathVariable("id") Long technologyId) {
+    public ResponseEntity<Technology> getById(@PathVariable("id") Long technologyId) {
         return new ResponseEntity<>(technologyService.getById(technologyId), HttpStatus.ACCEPTED);
     }
 
@@ -43,15 +43,15 @@ public class TechnologyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Technology> update(@PathVariable("id") Long technologyId, @Valid @RequestBody TechnologyDto technologyInformation) {
-        return new ResponseEntity<>(technologyService.update(technologyId, technologyInformation), HttpStatus.CREATED);
+        return new ResponseEntity<>(technologyService.update(technologyId, technologyInformation), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Technology> delete(@PathVariable("id") Long technologyId) {
         return new ResponseEntity<>(technologyService.delete(technologyId), HttpStatus.OK);
     }
 
-    @GetMapping("candidates")
+    @GetMapping("/candidates")
     public ResponseEntity<TechnologyWithCandidatesDto> getCandidatesByTechnology(@RequestBody TechnologyDto technologyDto) {
 
         return new ResponseEntity<>(technologyService.getCandidates(technologyDto), HttpStatus.OK);
