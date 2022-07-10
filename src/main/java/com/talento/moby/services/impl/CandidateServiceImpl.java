@@ -66,9 +66,7 @@ public class CandidateServiceImpl implements CandidateService {
     @Transactional
     public void delete(Long candidateId) {
         var candidate = candidateRepository.findById(candidateId);
-        candidate.ifPresentOrElse(c -> {
-                    candidateRepository.deleteById(c.getId());
-                },
+        candidate.ifPresentOrElse(c -> candidateRepository.deleteById(c.getId()),
                 () -> {
                     throw new ResourceNotFoundException("Candidate not found with candidateId " + candidateId);
                 });
@@ -89,6 +87,7 @@ public class CandidateServiceImpl implements CandidateService {
         });
 
         var technologies = technologyExpertiseService.getTechnologiesAndYearsOfExperienceByCandidate(candidateId);
+        log.debug(String.valueOf(candidate), technologies);
         return mapToCandidateWithTechnologiesDto(candidate, technologies);
     }
 
@@ -97,12 +96,10 @@ public class CandidateServiceImpl implements CandidateService {
     public void deleteExpertise(Long candidateId, Long technologyId) {
         var technology = Optional.of(technologyRepository.getReferenceById(technologyId))
                 .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + technologyId));
-
         var candidate = Optional.of(candidateRepository.getReferenceById(candidateId))
-                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + candidateId));
+                .orElseThrow(() -> new ResourceNotFoundException("Candidate not found with ID: " + candidateId));
         if (technology != null && candidate != null) {
             technologyExpertiseService.deleteTechnologyExpertiseByCandidate(candidateId, technologyId);
-
         }
     }
 

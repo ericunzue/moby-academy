@@ -192,9 +192,7 @@ public class TestEntityFactory {
 
     public static List<CandidatesExpertiseProjection> get_candidates_expertise_projection_list() {
         List<CandidatesExpertiseProjection> candidatesExpertise = new ArrayList<>();
-        LongStream.range(0, 5).forEach(i -> {
-            candidatesExpertise.add(get_candidates_expertise_projection(i));
-        });
+        LongStream.range(0, 5).forEach(i -> candidatesExpertise.add(get_candidates_expertise_projection(i)));
         return candidatesExpertise;
     }
 
