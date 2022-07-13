@@ -48,26 +48,6 @@ public class TechnologyExpertiseServiceImpl implements TechnologyExpertiseServic
     }
 
     @Override
-    public TechnologyExpertise getById(Long technologyId) {
-        return null;
-    }
-
-    @Override
-    public TechnologyExpertise update(Long technologyId, TechnologyExpertise technologyInformation) {
-        return null;
-    }
-
-    @Override
-    public TechnologyExpertise delete(Long technologyId) {
-        return null;
-    }
-
-    @Override
-    public List<TechnologyExpertise> getAll() {
-        return null;
-    }
-
-    @Override
     public List<TechnologyExpertiseProjection> getTechnologiesAndYearsOfExperienceByCandidate(Long candidateId) {
         return Optional.of(technologyExpertiseRepository.getTechnologiesAndYearsOfExperienceByCandidate(candidateId)).orElse(null);
     }

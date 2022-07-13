@@ -1,6 +1,7 @@
 package com.talento.moby.models.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,10 +19,10 @@ import javax.validation.constraints.Min;
 @Table(name = "technologiesExpertise")
 @IdClass(value = TechnologyExpertiseId.class)
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Valid
-
 public class TechnologyExpertise {
 
     @Id
