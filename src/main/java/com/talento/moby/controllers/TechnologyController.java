@@ -4,6 +4,8 @@ import com.talento.moby.models.dto.TechnologyDto;
 import com.talento.moby.models.dto.TechnologyWithCandidatesDto;
 import com.talento.moby.models.entities.Technology;
 import com.talento.moby.services.TechnologyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,37 +23,44 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/technologies")
+@Api(value = "Technologies REST Controller", tags = "REST APIs related to Technology Entity!")
 public class TechnologyController {
 
     @Autowired
     private TechnologyService technologyService;
 
-    @GetMapping
+    @ApiOperation(value = "Get list of Technologies in the System ", response = Iterable.class)
+    @GetMapping("/")
     public ResponseEntity<List<Technology>> getAll() {
         return new ResponseEntity<>(technologyService.getAll(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get one technology ", response = Technology.class)
     @GetMapping("/{id}")
     public ResponseEntity<Technology> getById(@PathVariable("id") Long technologyId) {
         return new ResponseEntity<>(technologyService.getById(technologyId), HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation(value = "Save one technology in the System ", response = Technology.class)
     @PostMapping(value = "/save")
     public ResponseEntity<Technology> save(@Valid @RequestBody TechnologyDto newTechnology) {
         return new ResponseEntity<>(technologyService.save(newTechnology), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Update one technology ", response = Technology.class)
     @PutMapping("/{id}")
     public ResponseEntity<Technology> update(@PathVariable("id") Long technologyId, @Valid @RequestBody TechnologyDto technologyInformation) {
         return new ResponseEntity<>(technologyService.update(technologyId, technologyInformation), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Delete one technology from the System ", response = Technology.class)
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long technologyId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/candidates")
+    @ApiOperation(value = "Obtains the candidates contained in a technology and their experience ", response = TechnologyWithCandidatesDto.class)
     public ResponseEntity<TechnologyWithCandidatesDto> getCandidatesByTechnology(@RequestBody TechnologyDto technologyDto) {
 
         return new ResponseEntity<>(technologyService.getCandidates(technologyDto), HttpStatus.OK);
