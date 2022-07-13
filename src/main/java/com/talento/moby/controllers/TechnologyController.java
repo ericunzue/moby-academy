@@ -37,7 +37,7 @@ public class TechnologyController {
 
     @ApiOperation(value = "Get one technology ", response = Technology.class)
     @GetMapping("/{id}")
-    public ResponseEntity<Technology> getOne(@PathVariable("id") Long technologyId) {
+    public ResponseEntity<Technology> getById(@PathVariable("id") Long technologyId) {
         return new ResponseEntity<>(technologyService.getById(technologyId), HttpStatus.ACCEPTED);
     }
 
@@ -50,17 +50,17 @@ public class TechnologyController {
     @ApiOperation(value = "Update one technology ", response = Technology.class)
     @PutMapping("/{id}")
     public ResponseEntity<Technology> update(@PathVariable("id") Long technologyId, @Valid @RequestBody TechnologyDto technologyInformation) {
-        return new ResponseEntity<>(technologyService.update(technologyId, technologyInformation), HttpStatus.CREATED);
+        return new ResponseEntity<>(technologyService.update(technologyId, technologyInformation), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete one technology from the System ", response = Technology.class)
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Technology> delete(@PathVariable("id") Long technologyId) {
-        return new ResponseEntity<>(technologyService.delete(technologyId), HttpStatus.OK);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long technologyId) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/candidates")
     @ApiOperation(value = "Obtains the candidates contained in a technology and their experience ", response = TechnologyWithCandidatesDto.class)
-    @GetMapping("candidates")
     public ResponseEntity<TechnologyWithCandidatesDto> getCandidatesByTechnology(@RequestBody TechnologyDto technologyDto) {
 
         return new ResponseEntity<>(technologyService.getCandidates(technologyDto), HttpStatus.OK);

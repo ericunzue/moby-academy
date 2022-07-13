@@ -45,5 +45,5 @@ public class Candidate {
     @JoinColumn(name = "dniId", unique = true, referencedColumnName = "dniId")
     private Document dni;
 
-
+    
 }

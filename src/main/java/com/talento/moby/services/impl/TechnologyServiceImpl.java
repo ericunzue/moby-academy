@@ -36,11 +36,8 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional(readOnly = true)
     public Technology getById(Long technologyId) {
-        try {
-            return technologyRepository.findById(technologyId).get();
-        } catch (Exception e) {
-            throw new ResourceNotFoundException("Technology not found with technologyId " + technologyId);
-        }
+        return technologyRepository.findById(technologyId).orElseThrow(() -> new ResourceNotFoundException("Technology not found with technologyId " + technologyId));
+
     }
 
     @Override
@@ -58,26 +55,24 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public Technology delete(Long technologyId) {
-        return Optional.of(technologyRepository.findById(technologyId)).get()
+    public void delete(Long technologyId) {
+        var technology = Optional.of(technologyRepository.findById(technologyId)).get()
                 .orElseThrow(() -> new ResourceNotFoundException("Technology not found with technologyId " + technologyId));
+        technologyRepository.delete(technology);
+
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Technology> getAll() {
-        List<Technology> technologies = technologyRepository.findAll();
-        if (technologies.isEmpty()) {
-            throw new NoContentException();
-        }
-        return technologies;
+        return Optional.of(technologyRepository.findAll()).orElse(null);
     }
 
     @Override
     public TechnologyWithCandidatesDto getCandidates(TechnologyDto technologyDto) {
 
         var technology = this.findByNameAndVersion(technologyDto);
-        System.out.println(technology.get());
+
         List<CandidatesExpertiseProjection> candidates;
 
         if (technology.isPresent()) {
@@ -90,7 +85,6 @@ public class TechnologyServiceImpl implements TechnologyService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Technology> findByNameAndVersion(TechnologyDto technologyDto) {
         return Optional.ofNullable(technologyRepository.findTechnologyBy(technologyDto.getName(), technologyDto.getVersion())
                 .orElseThrow(() -> new ResourceNotFoundException("Technology not found")));

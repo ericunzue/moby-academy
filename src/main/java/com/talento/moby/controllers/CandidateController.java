@@ -43,23 +43,24 @@ public class CandidateController {
     @ApiOperation(value = "Get Candidate By Id ", response = Candidate.class)
     @GetMapping("/{id}")
     public ResponseEntity<Candidate> getById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(candidateService.getById(id), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(candidateService.getById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save Candidate ", response = CandidateDto.class)
     @PostMapping(value = "/save")
-    public ResponseEntity<Candidate> save(@Valid @RequestBody CandidateDto newCandidate) {
-        return new ResponseEntity<>(candidateService.save(newCandidate), HttpStatus.CREATED);
+    public ResponseEntity<HttpStatus> save(@Valid @RequestBody CandidateDto newCandidate) {
+        candidateService.save(newCandidate);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Update Candidate ", response = CandidateDto.class)
     @PutMapping("/{id}")
     public ResponseEntity<Candidate> update(@PathVariable("id") Long id, @Valid @RequestBody CandidateDto candidateInformation) {
-        return new ResponseEntity<>(candidateService.update(id, candidateInformation), HttpStatus.CREATED);
+        return new ResponseEntity<>(candidateService.update(id, candidateInformation), HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "Delete Candidate ")
-    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
         candidateService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
