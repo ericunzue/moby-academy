@@ -14,7 +14,7 @@ public interface TechnologyService {
 
     Technology update(Long technologyId, TechnologyDto technologyInformation);
 
-    Technology delete(Long technologyId);
+    void delete(Long technologyId);
 
     List<Technology> getAll();
 

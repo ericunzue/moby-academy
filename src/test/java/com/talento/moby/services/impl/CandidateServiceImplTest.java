@@ -89,6 +89,7 @@ class CandidateServiceImplTest {
     void delete() {
         when(candidateRepository.findById(1L)).thenReturn(Optional.ofNullable(get_candidate()));
         Optional<Candidate> candidate = candidateRepository.findById(1L);
+        assertNotNull(candidate);
         candidateService.delete(1L);
         verify(candidateRepository, atLeastOnce()).deleteById(1L);
     }

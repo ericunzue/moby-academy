@@ -47,8 +47,8 @@ public class TechnologyController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Technology> delete(@PathVariable("id") Long technologyId) {
-        return new ResponseEntity<>(technologyService.delete(technologyId), HttpStatus.OK);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long technologyId) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/candidates")

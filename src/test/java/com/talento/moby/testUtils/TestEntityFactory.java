@@ -7,6 +7,7 @@ import com.talento.moby.models.dto.TechnologyWithCandidatesDto;
 import com.talento.moby.models.entities.Candidate;
 import com.talento.moby.models.entities.Document;
 import com.talento.moby.models.entities.Technology;
+import com.talento.moby.models.entities.TechnologyExpertise;
 import com.talento.moby.models.enums.DocumentType;
 import com.talento.moby.models.projections.CandidatesExpertiseProjection;
 import com.talento.moby.models.projections.TechnologyExpertiseProjection;
@@ -176,6 +177,13 @@ public class TestEntityFactory {
                 .build();
     }
 
+    public static Technology get_technology_without_id() {
+        return Technology.builder()
+                .name("Java")
+                .version(8)
+                .build();
+    }
+
     public static TechnologyDto get_technology_dto() {
         return TechnologyDto.builder()
                 .name("Java")
@@ -192,15 +200,19 @@ public class TestEntityFactory {
 
     public static List<CandidatesExpertiseProjection> get_candidates_expertise_projection_list() {
         List<CandidatesExpertiseProjection> candidatesExpertise = new ArrayList<>();
-        LongStream.range(0, 5).forEach(i -> candidatesExpertise.add(get_candidates_expertise_projection(i)));
+
+        LongStream.range(0, 2).forEach(i -> {
+            candidatesExpertise.add(get_candidates_expertise_projection(i));
+        });
         return candidatesExpertise;
     }
+
 
     public static CandidatesExpertiseProjection get_candidates_expertise_projection(Long id) {
         return new CandidatesExpertiseProjection() {
             @Override
             public String getName() {
-                return "Candidate name" + id;
+                return "Candidate name";
             }
 
             @Override
@@ -210,7 +222,7 @@ public class TestEntityFactory {
 
             @Override
             public int getExpertise() {
-                return 2;
+                return (int) (id + 2);
             }
 
             @Override
@@ -218,6 +230,14 @@ public class TestEntityFactory {
 
             }
         };
+    }
+
+    public static TechnologyExpertise get_technology_expertise() {
+        return TechnologyExpertise.builder()
+                .candidate(get_candidate())
+                .technology(get_technology())
+                .years(1)
+                .build();
     }
 
 }
