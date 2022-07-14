@@ -1,9 +1,7 @@
 package com.talento.moby.services.impl;
 
-import com.talento.moby.models.dto.TechnologyWithCandidatesDto;
-import com.talento.moby.models.entities.Technology;
+import com.talento.moby.exception.ResourceNotFoundException;
 import com.talento.moby.repositories.TechnologyRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,7 +16,9 @@ import static com.talento.moby.testUtils.TestEntityFactory.get_technology_dto;
 import static com.talento.moby.testUtils.TestEntityFactory.get_technology_without_id;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -69,28 +69,37 @@ class TechnologyServiceImplTest {
     @Test
     void delete() {
         when(technologyRepository.findById(1L)).thenReturn(Optional.ofNullable(get_technology()));
-        Optional<Technology> technologyOptional = technologyRepository.findById(1L);
-        var technology = technologyOptional.get();
+        var technology = technologyRepository.findById(1L);
         assertNotNull(technology);
-        technologyRepository.delete(technology);
-        verify(technologyRepository, atLeastOnce()).delete(technology);
+        technologyService.delete(1L);
+        technologyRepository.delete(technology.get());
+        verify(technologyRepository, atLeastOnce()).delete(technology.get());
 
+    }
+
+    @Test
+    void delete_throw_exception() {
+        when(technologyRepository.findById(1L)).thenThrow(new ResourceNotFoundException());
+        assertThrows(ResourceNotFoundException.class, () -> technologyService.delete(1L));
+        verify(technologyRepository, times(1)).findById(1L);
     }
 
     @Test
     void getAll() {
         when(technologyRepository.findAll()).thenReturn(get_technologies());
-        technologyService.getAll();
+        var technologiesList = technologyService.getAll();
+        assertNotNull(technologiesList);
     }
 
     @Test
-    @Disabled("No quiere funcionar")
     void getCandidates() {
-        var technology = technologyService.findByNameAndVersion(get_technology_dto()).get();
-        when(technologyRepository.getCandidates(technology.getId())).thenReturn(get_candidates_expertise_projection_list());
-        var candidates = technologyRepository.getCandidates(technology.getId());
+        when(technologyRepository.findTechnologyBy("Java", 8)).thenReturn(Optional.ofNullable(get_technology()));
+        when(technologyService.findByNameAndVersion(get_technology_dto())).thenReturn(Optional.ofNullable(get_technology()));
+        var technology = technologyService.findByNameAndVersion(get_technology_dto());
+        when(technologyRepository.getCandidates(1L)).thenReturn(get_candidates_expertise_projection_list());
+
+        var candidates = technologyRepository.getCandidates(1L);
         assertNotNull(candidates);
-        var techWithCandidates = new TechnologyWithCandidatesDto(technology, candidates);
         technologyService.getCandidates(get_technology_dto());
 
     }

@@ -34,7 +34,7 @@ public class CandidateServiceImpl implements CandidateService {
     @Autowired
     private TechnologyExpertiseService technologyExpertiseService;
 
-    private final static String CANDIDATE_NOT_FOUND = "Candidate not found with Id";
+    private static final String CANDIDATE_NOT_FOUND = "Candidate not found with Id";
 
     @Override
     @Transactional

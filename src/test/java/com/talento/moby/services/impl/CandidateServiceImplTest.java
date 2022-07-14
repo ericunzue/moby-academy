@@ -98,7 +98,8 @@ class CandidateServiceImplTest {
     @Test
     void getAll() {
         when(candidateRepository.findAll()).thenReturn(get_candidates());
-        candidateService.getAll();
+        var candidatesList = candidateService.getAll();
+        assertNotNull(candidatesList);
 
     }
 

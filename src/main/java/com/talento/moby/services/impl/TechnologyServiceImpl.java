@@ -26,7 +26,7 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Autowired
     private TechnologyRepository technologyRepository;
 
-    private final static String TECHNOLOGY_NOT_FOUND = "Technology not found with technologyId ";
+    private static final String TECHNOLOGY_NOT_FOUND = "Technology not found with technologyId ";
 
     @Override
     @Transactional
@@ -65,18 +65,18 @@ public class TechnologyServiceImpl implements TechnologyService {
         technology.setVersion(technologyInformation.getVersion());
         log.debug(String.valueOf(technologyInformation.getVersion()));
 
-
         return technologyRepository.save(technology);
     }
 
     @Override
     @Transactional
     public void delete(Long technologyId) {
-        Optional.of(technologyRepository.findById(technologyId)).get()
-                .orElseThrow(() -> {
-                    log.error(TECHNOLOGY_NOT_FOUND + technologyId);
-                    throw new ResourceNotFoundException(TECHNOLOGY_NOT_FOUND + technologyId);
-                });
+        Optional.of(technologyRepository.findById(technologyId)).ifPresentOrElse(
+                t -> technologyRepository.delete(t.get()),
+                () -> {
+                    throw new ResourceNotFoundException();
+                }
+        );
 
     }
 
@@ -91,13 +91,11 @@ public class TechnologyServiceImpl implements TechnologyService {
         log.debug("TechnologyDto in GetCandidates--> " + technologyDto);
         var technology = this.findByNameAndVersion(technologyDto);
         log.debug("Technology in GetCandidates--> " + technology);
-
         List<CandidatesExpertiseProjection> candidates;
 
         if (technology.isPresent()) {
             candidates = technologyRepository.getCandidates(technology.get().getId());
             log.debug("Candidates in GetCandidates--> " + candidates);
-
             return new TechnologyWithCandidatesDto(technology.get(), candidates);
         } else {
             log.error("Candidates in GetCandidates--> " + new NoContentException());
