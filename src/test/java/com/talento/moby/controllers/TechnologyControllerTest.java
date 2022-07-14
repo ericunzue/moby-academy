@@ -40,7 +40,7 @@ class TechnologyControllerTest {
     void getAll() throws Exception {
         List<Technology> technologies = get_technologies();
         when(technologyService.getAll()).thenReturn(technologies);
-        mockMvc.perform(get("/api/technologies")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/technologies/")).andExpect(status().isOk());
     }
 
     @Test
