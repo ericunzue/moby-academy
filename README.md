@@ -1,4 +1,4 @@
-# Evaluacion-técnica-mobyacademy
+# Evaluacion-técnica-MobyAcademy
 
 MobyDigital
 
@@ -30,3 +30,9 @@ en múltiples tecnologías y una tecnología puede estar asociada a múltiples c
 
 - http://localhost:8080/v2/api-docs
 - http://localhost:8080/swagger-ui/
+
+# Aclaraciones:
+
+La API no expone directamente a las entidades Experiencia y Documento ya que estas están intimamente relacionadas con
+Candidato y Tecnología. La única manera de modificar/eliminar un documento, es actuando sobre el Candiato.
+Similar comportamiento sucede con la experiencia, es necesario el Candidato para trabajar sobre la misma.
