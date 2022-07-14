@@ -43,7 +43,7 @@ class CandidateControllerTest {
     void get_all_candidates_ok_test() throws Exception {
         List<Candidate> candidates = get_candidates();
         when(candidateService.getAll()).thenReturn(candidates);
-        mockMvc.perform(get("/api/candidates")).andExpect(status().isOk());
+        mockMvc.perform(get("/api/candidates/")).andExpect(status().isOk());
     }
 
     @Test

@@ -31,15 +31,22 @@ public class TechnologyExpertiseServiceImpl implements TechnologyExpertiseServic
     @Override
     public void save(Long candidateId, Long technologyId, int expertise) {
         var technology = Optional.of(technologyRepository.getReferenceById(technologyId))
-                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + technologyId));
+                .orElseThrow(() -> {
+                    log.error("Get technology on save method in TechnologyExpertiseServiceImpl--> " + new ResourceNotFoundException());
+                    return new ResourceNotFoundException("Technology not found with ID: " + technologyId);
+                });
 
         var candidate = Optional.of(candidateRepository.getReferenceById(candidateId))
-                .orElseThrow(() -> new ResourceNotFoundException("Technology not found with ID: " + candidateId));
+                .orElseThrow(() -> {
+                    log.error("Get candidate on save method in TechnologyExpertiseServiceImpl--> " + new ResourceNotFoundException());
+                    return new ResourceNotFoundException("Technology not found with ID: " + candidateId);
+                });
 
         var technologyExpertise = new TechnologyExpertise();
         technologyExpertise.setCandidate(candidate);
         technologyExpertise.setTechnology(technology);
         technologyExpertise.setYears(expertise);
+        log.debug("technologyExpertise on save method in TechnologyExpertiseServiceImpl--> " + technologyExpertise);
 
 
         technologyExpertiseRepository.save(technologyExpertise);
